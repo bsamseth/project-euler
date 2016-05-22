@@ -12,22 +12,7 @@ Solution comment:
 No brain, just find any solution with n <= 10000. Happens to
 include the desired solution, but not smart in any way.
 """
-from gmpy2 import is_square, sqrt
-
-def pentagonal(n):
-    return n*(3*n-1)/2
-
-def ispentagonal(P):
-    """Returns true if P is pentagonal.
-    ABC-formula on P(n) gives
-        n = (sqrt(1+24P)+1)/6
-    If P is pentagonal, n is an int.
-        1. sqrt must return a integer
-        2. must be divisble by 6
-    """
-    sq = 1 + 24*P
-    return is_square(sq) and int(sqrt(sq)+1) % 6 == 0
-
+from projecteuler.numbers import pentagonal, ispentagonal
 
 upper = 10000  # upper n in P(n)
 
