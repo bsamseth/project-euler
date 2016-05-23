@@ -25,6 +25,17 @@ def triangular(n):
     """Gives the n-th triangle number."""
     return n*(n+1)/2
 
+def hexagonal(n):
+    """Returns the n-th hexagonal number"""
+    return n*(2*n-1)
+
+def ishexagonal(H):
+    """Returns true if H is hexagonal
+    See ispentagonal for analog explenation"""
+    from gmpy2 import is_square, sqrt
+    sq = 1 + 8*H
+    return is_square(sq) and int(sqrt(sq)+1) % 4 == 0
+
 def palindrome(s):
     """Returns true if string s is a palindrome"""
     l = len(s)
