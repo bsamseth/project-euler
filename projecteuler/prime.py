@@ -1,6 +1,6 @@
 """
 The prime module makes available several functions for prime operations.
-Included are prime tests, prime lists, and prime factorization
+Included are prime tests, prime lists, and prime factorization.
 """
 
 def isprime(n):
@@ -65,3 +65,31 @@ def primes_list(n):
     if n > 1:
         primfac.append(n)
     return primfac
+
+def prime_stream():
+    """
+    A indefinite stream of primes, starting from 2. O(n log log n).
+    """
+    import itertools
+    yield from (2, 3, 5, 7)
+    D = {}
+    ps = prime_stream()
+    next(ps)
+    p = next(ps)
+    assert p == 3
+    psq = p*p
+    for i in itertools.count(9, 2):
+        if i in D:      # composite
+            step = D.pop(i)
+        elif i < psq:   # prime
+            yield i
+            continue
+        else:           # composite, = p*p
+            assert i == psq
+            step = 2*p
+            p = next(ps)
+            psq = p*p
+        i += step
+        while i in D:
+            i += step
+        D[i] = step
