@@ -29,9 +29,9 @@ def primes_up_to(n):
 
     A = np.ones(n+1, dtype=bool)
     A[0] = A[1] = False
-    for i in xrange(2, int(np.sqrt(n))+1):
+    for i in range(2, int(np.sqrt(n))+1):
         if A[i]:
-            for j in xrange(i**2, n+1, i):
+            for j in range(i**2, n+1, i):
                 A[j] = False
     return np.where(A)[0]
 
