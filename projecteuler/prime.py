@@ -21,8 +21,10 @@ def isprime(n):
     return True
 
 def primes_up_to(n):
-    """Return a numpy.ndarray of all primes <= n.
-    Uses Sieve of Eratosthenes, O(n log log n) """
+    """
+    Return a numpy.ndarray of bools of all primes <= n.
+    Uses Sieve of Eratosthenes, O(n log log n).
+    """
     import numpy as np
     if n < 2:
         return np.zeros(n+1, dtype=bool)
@@ -36,8 +38,10 @@ def primes_up_to(n):
     return np.where(A)[0]
 
 def primes_dict(n):
-    """Return a dictionary with the prime factorization of n.
-    Format of (key, value) is (prime, multiplicity)"""
+    """
+    Return a dictionary with the prime factorization of n.
+    Format of (key, value) is (prime, multiplicity)
+    """
     primfac = {}
     d = 2
     while d*d <= n:
@@ -53,8 +57,7 @@ def primes_dict(n):
     return primfac
 
 def primes_list(n):
-    """Return a dictionary with the prime factorization of n.
-    Format of (key, value) is (prime, multiplicity)"""
+    "Return a list with the prime factorization of n."
     primfac = []
     d = 2
     while d*d <= n:
@@ -67,9 +70,7 @@ def primes_list(n):
     return primfac
 
 def prime_stream():
-    """
-    A indefinite stream of primes, starting from 2. O(n log log n).
-    """
+    "An indefinite stream of primes, starting from 2. O(n log log n)."
     import itertools
     yield from (2, 3, 5, 7)
     D = {}
