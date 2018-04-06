@@ -4,6 +4,10 @@ enable_language(C CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra")
 
+# Utility headers:
+include_directories(cppitertools)
+
+# Add every problem with a C++ solution.
 add_subdirectory(012)
 add_subdirectory(014)
 add_subdirectory(058)
@@ -31,6 +35,7 @@ add_subdirectory(096)
 add_subdirectory(099)
 add_subdirectory(100)
 add_subdirectory(102)
+add_subdirectory(103)
 add_subdirectory(104)
 add_subdirectory(107)
 add_subdirectory(112)
