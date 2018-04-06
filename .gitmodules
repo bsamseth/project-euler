@@ -1,0 +1,3 @@
+[submodule "cppitertools"]
+	path = cppitertools
+	url = git@github.com:ryanhaining/cppitertools.git
