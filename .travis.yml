@@ -26,7 +26,7 @@ install:
 before_script:
   - g++ --version
   - PARENTDIR=$(pwd)
-  - mkdir $PARENTDIR/build && cd $PARENTDIR/build
+  - mkdir $PARENTDIR/build
 
 script:
   - cd $PARENTDIR/build
