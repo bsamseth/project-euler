@@ -206,3 +206,5 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+CMakeLists.txt.user
+CMakeLists.txt.user.caed461
