@@ -16,6 +16,7 @@
  */
 
 #include <iostream>
+#include <numeric>
 #include <ctime>
 #include <cmath>
 #include <vector>
@@ -64,7 +65,7 @@ bool is_permutation(int a, int b) {
 
 int main() {
     clock_t t_start = clock();
-    double min_ratio = INT_MAX;
+    double min_ratio = std::numeric_limits<double>::max();
     int min_n = -1;
     for (int n = 2; n <= 10000000; ++n) {
         double p = phi(n);

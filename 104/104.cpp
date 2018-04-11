@@ -22,6 +22,7 @@ Solution comment: Quick, ~10 ms.
                   Then just a matter of searching.
  */
 #include <iostream>
+#include <chrono>
 #include <cmath>
 
 inline int first_digits(int n) {
