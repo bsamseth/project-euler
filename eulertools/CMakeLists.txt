@@ -6,7 +6,6 @@ enable_language(CXX)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 include(ConfigSafeGuards)
 include(Colors)
-include(CodeCoverage)
 
 
 # --------------------------------------------------------------------------------
@@ -62,19 +61,6 @@ add_custom_target(gtest
 include(CTest)
 enable_testing()
 add_test(unit_tests ${PROJECT_BINARY_DIR}/${TEST_MAIN})
-
-# --------------------------------------------------------------------------------
-#                         Code Coverage.
-# --------------------------------------------------------------------------------
-# If unwanted files are included in the coverage reports, you can adjust the exclude
-# patterns on line 118 in cmake/CodeCoverage.cmake
-SETUP_TARGET_FOR_COVERAGE(
-                        coverage            # Name for custom target.
-                        ${TEST_MAIN}        # Name of the test driver executable that runs the tests.
-                                            # NOTE! This should always have a ZERO as exit code
-                                            # otherwise the coverage generation will not complete.
-                        coverage_out        # Name of output directory.
-                        )
 
 # --------------------------------------------------------------------------------
 #                         Documentation.
