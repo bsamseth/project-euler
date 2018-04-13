@@ -42,13 +42,14 @@ Solution comment: Final version simplified somewhat based on mathblog.dk write-u
 #include <vector>
 #include <chrono>
 
+#include "timing.hpp"
 #include "primes.hpp"
 
 using namespace std::chrono;
 using namespace euler::primes;
 
 int main() {
-    auto start = high_resolution_clock::now();
+    euler::Timer timer;
 
     int n = 4;
     int best = 3;
@@ -61,9 +62,6 @@ int main() {
         best = std::max(best, solutions);
     }
 
-
-    auto time = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count() / (double) 1e6;
     printf("Answer: n = %d -> solutions = %d\n", n, best);
-    printf("Found in %.3f ms\n", time);
-
+    timer.stop();
 }
