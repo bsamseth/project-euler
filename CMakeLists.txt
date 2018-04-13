@@ -11,7 +11,7 @@ if(OpenMP_CXX_FOUND)
 endif()
 
 # Utility headers:
-include_directories(cppitertools)
+include_directories(eulertools/include cppitertools)
 
 # Add every problem with a C++ solution.
 add_subdirectory(012)
