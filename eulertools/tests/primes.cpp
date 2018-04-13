@@ -50,3 +50,14 @@ TEST(Primes, number_of_divisors) {
     EXPECT_EQ(21, number_of_divisors(24, 2));
     EXPECT_EQ(40, number_of_divisors(24, 3));
 }
+
+
+TEST(Primes, is_prime) {
+    EXPECT_TRUE(is_prime(2));
+    EXPECT_TRUE(is_prime(3));
+    EXPECT_FALSE(is_prime(4));
+    EXPECT_TRUE(is_prime(13));
+
+    EXPECT_TRUE(is_prime(179426549UL));
+    EXPECT_FALSE(is_prime(179426551UL));
+}
