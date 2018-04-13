@@ -1,3 +1,6 @@
 [submodule "cppitertools"]
 	path = cppitertools
 	url = git@github.com:ryanhaining/cppitertools.git
+[submodule "eulertools/external/googletest"]
+	path = eulertools/external/googletest
+	url = https://github.com/svn2github/googletest.git
