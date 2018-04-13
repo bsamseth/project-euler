@@ -1,7 +1,8 @@
 #pragma once
 
-#include <unordered_map>
 #include <cmath>
+#include <array>
+#include <unordered_map>
 
 namespace euler::primes {
 
