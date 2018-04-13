@@ -35,7 +35,7 @@ Solution comment: Final version simplified somewhat based on mathblog.dk write-u
                   meaning we don't divide the 1/2n + 1/2n = 1/n solution by two. So, with
                   d(n) being the number of divisors of n, we want to find n so that
 
-                    ( d(n) + 1 ) / 2 > 1000.
+                    ( d(n^2) + 1 ) / 2 > 1000.
 */
 
 #include <iostream>
