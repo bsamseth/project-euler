@@ -1,8 +1,13 @@
 #pragma once
 
+#include <cstdlib>
+#include <type_traits>
 #include <cmath>
 #include <array>
 #include <unordered_map>
+#include <random>
+
+#include <tools.hpp>
 
 namespace euler::primes {
 
@@ -31,9 +36,12 @@ template<> constexpr std::array<bool, 2> composite_mask<1>() { return {true, tru
  * the largest power of p which divides n.
  */
 template<typename Integer = int,
-         typename Power = int,
-         typename Maptype = std::unordered_map<Integer, Power>>
+        typename Power = int,
+        typename Maptype = std::unordered_map<Integer, Power>>
 void prime_map(Integer n, Maptype &map) {
+
+    static_assert(std::is_integral<Integer>::value, "Integral required.");
+    static_assert(std::is_integral<Power>::value, "Integral required.");
 
     Integer d = 2;
 
@@ -53,17 +61,20 @@ void prime_map(Integer n, Maptype &map) {
         map.emplace(n, 1);
 };
 
-
 /**
  * Return the number of divisors for n^(power).
  */
 template<typename Integer = int, typename Power = int>
 Integer number_of_divisors(Integer n, Power power = 1) {
+
+    static_assert(std::is_integral<Integer>::value, "Integral required.");
+    static_assert(std::is_integral<Power>::value, "Integral required.");
+
     std::unordered_map<Integer, Integer> primes;
     prime_map(n, primes);
     Integer count = 1;
-    for (auto [p, a] : primes) {
-        count *= power * a + 1;
+    for (auto it = primes.begin(); it != primes.end(); ++it) {
+        count *= power * it->second + 1;
     }
     return count;
 }
