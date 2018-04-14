@@ -36,3 +36,4 @@ script:
   - cd $PARENTDIR/eulertools/build
   - cmake $PARENTDIR/eulertools
   - make
+  - make gtest
