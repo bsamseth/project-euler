@@ -49,7 +49,7 @@ using namespace std::chrono;
 using namespace euler::primes;
 
 int main() {
-    euler::Timer timer;
+    euler::Timer timer{};
 
     int n = 4;
     int best = 3;
