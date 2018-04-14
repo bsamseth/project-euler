@@ -20,7 +20,7 @@ constexpr std::array<bool, N + 1> composite_mask() {
 
     static_assert(N >= 0, "N must be non-negative.");
 
-    std::array<bool, N + 1> mask = {true, true};
+    std::array<bool, N + 1> mask = { {true, true} };
 
     for (int i = 2; i*i <= N; ++i)
         if (!mask[i])
@@ -28,8 +28,8 @@ constexpr std::array<bool, N + 1> composite_mask() {
                 mask[j] = true;
     return mask;
 }
-template<> constexpr std::array<bool, 1> composite_mask<0>() { return {true}; };
-template<> constexpr std::array<bool, 2> composite_mask<1>() { return {true, true}; };
+template<> constexpr std::array<bool, 1> composite_mask<0>() { return { {true} }; }
+template<> constexpr std::array<bool, 2> composite_mask<1>() { return { {true, true} }; }
 
 /**
  * Fill a supplied map with (p : a) pairs where a is
