@@ -12,7 +12,7 @@ class Timer {
 public:
     Timer() : _start(Clock::now()) {}
 
-    void stop(double scale = 1e6, std::string format = "Execution time: %.3f\n") {
+    void stop(double scale = 1e6, std::string format = "Execution time: %.3f ms\n") {
         auto duration = Clock::now() - _start;
         double time = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() / scale;
         printf(format.c_str(), time);
