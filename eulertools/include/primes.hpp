@@ -31,6 +31,19 @@ constexpr std::array<bool, N + 1> composite_mask() {
 template<> constexpr std::array<bool, 1> composite_mask<0>() { return { {true} }; }
 template<> constexpr std::array<bool, 2> composite_mask<1>() { return { {true, true} }; }
 
+template<int N>
+std::vector<int> primes_up_to() {
+    const auto composite = composite_mask<N>();
+    std::vector<int> primes = {2};
+    for (std::size_t i = 3; i < composite.size(); i += 2)
+        if (not composite[i])
+            primes.push_back(i);
+    return primes;
+};
+template<> std::vector<int> primes_up_to<0>() { return {}; }
+template<> std::vector<int> primes_up_to<1>() { return {}; }
+template<> std::vector<int> primes_up_to<2>() { return {2}; }
+
 /**
  * Fill a supplied map with (p : a) pairs where a is
  * the largest power of p which divides n.

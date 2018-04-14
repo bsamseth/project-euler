@@ -31,6 +31,25 @@ TEST(Primes, composite_mask_tiny_N) {
     ASSERT_TRUE(mask1[1]);
 }
 
+TEST(Primes, primes_up_to) {
+    auto primes = primes_up_to<11>();
+    ASSERT_EQ(5U, primes.size());
+    ASSERT_EQ(2, primes[0]);
+    ASSERT_EQ(3, primes[1]);
+    ASSERT_EQ(5, primes[2]);
+    ASSERT_EQ(7, primes[3]);
+    ASSERT_EQ(11, primes[4]);
+}
+
+TEST(Primes, primes_up_to_tiny_N) {
+    auto p0 = primes_up_to<0>();
+    auto p1 = primes_up_to<1>();
+    auto p2 = primes_up_to<2>();
+    ASSERT_EQ(0U, p0.size() + p1.size());
+    ASSERT_EQ(1U, p2.size());
+    ASSERT_EQ(2, p2[0]);
+}
+
 TEST(Primes, prime_map) {
     std::map<int, int> primes;
     prime_map(2*2*2*3*3*11, primes);
