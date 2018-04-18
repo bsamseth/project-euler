@@ -9,7 +9,7 @@ namespace euler {
  * Return true if x is odd.
  */
 template<typename Int>
-inline bool odd(Int x) {
+inline constexpr bool odd(Int x) {
     static_assert(std::is_integral<Int>::value, "Integral required.");
     return static_cast<bool>(x & 1);
 }
@@ -17,7 +17,7 @@ inline bool odd(Int x) {
  * Return true if x is even.
  */
 template<typename Int>
-inline bool even(Int x) {
+inline constexpr bool even(Int x) {
     return not odd(x);
 }
 
