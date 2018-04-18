@@ -13,6 +13,20 @@ endif()
 # Utility headers:
 include_directories(eulertools/include cppitertools)
 
+# Ask CMake to output a compile_commands.json file for use with things like Vim YCM.
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
+
+IF( EXISTS "${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json" )
+    message(STATUS "Exporting compile_commands.json to source directory.")
+    EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
+        ${CMAKE_CURRENT_SOURCE_DIR}/compile_commands.json
+        )
+ELSE()
+    message(STATUS "compile_commands.json not exported. Rerun cmake.")
+ENDIF()
+
+
 # Add every problem with a C++ solution.
 add_subdirectory(012)
 add_subdirectory(014)
