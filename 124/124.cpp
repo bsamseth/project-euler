@@ -10,8 +10,8 @@ Let E(k) be the kth element in the sorted n column; for example, E(4) = 8 and E(
 If rad(n) is sorted for 1 ≤ n ≤ 100000, find E(10000).
 
 
-Solution comment: Using a sieve to generate all the radicals, then sorting the result.
-                  Quite fast, about ~7ms. Mostly spent sorting.
+Solution comment: Using a sieve to generate all the radicals, then selecting out the result.
+                  Quite fast, about ~1.6ms.
 */
 
 #include <iostream>
@@ -46,7 +46,8 @@ int main() {
         }
     }
 
-    std::sort(rads.begin(), rads.end());
+    // Find the nth smallest element. After this, rads[target] is that pair.
+    std::nth_element(rads.begin(), rads.begin() + target, rads.end());
 
     timer.stop();
     printf("Answer: %d\n", rads[target].second);
