@@ -20,3 +20,8 @@ TEST(Tools, pow_mod) {
 
     ASSERT_EQ(723UL, pow_mod(123ULL, 321, 1000UL));
 }
+
+TEST(Tools, pow) {
+    ASSERT_EQ(1, pow(1, 200));
+    ASSERT_EQ(847288609443ULL, pow(3ULL, 25));
+}

@@ -66,4 +66,18 @@ constexpr Modulus pow_mod(Base a, Exponent x, Modulus n) {
     return res;
 };
 
+template<typename Base, typename Exponent>
+Base pow(Base base, Exponent exp) {
+    Base result = 1;
+    while (true) {
+        if (odd(exp))
+            result *= base;
+        exp >>= 1;
+        if (!exp)
+            break;
+        base *= base;
+    }
+    return result;
+}
+
 }
