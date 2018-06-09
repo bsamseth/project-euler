@@ -16,7 +16,7 @@ namespace euler::primes {
  * mask[a] is true iff a is a composite number.
  */
 template<int N>
-constexpr std::array<bool, N + 1> composite_mask() {
+std::array<bool, N + 1> composite_mask() {
 
     static_assert(N >= 0, "N must be non-negative.");
 
@@ -28,8 +28,8 @@ constexpr std::array<bool, N + 1> composite_mask() {
                 mask[j] = true;
     return mask;
 }
-template<> constexpr std::array<bool, 1> composite_mask<0>() { return { {true} }; }
-template<> constexpr std::array<bool, 2> composite_mask<1>() { return { {true, true} }; }
+template<> std::array<bool, 1> composite_mask<0>() { return { {true} }; }
+template<> std::array<bool, 2> composite_mask<1>() { return { {true, true} }; }
 
 template<int N>
 std::vector<int> primes_up_to() {
