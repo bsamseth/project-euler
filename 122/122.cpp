@@ -26,66 +26,62 @@ compute n^k; for example m(15) = 5.
 For 1 ≤ k ≤ 200, find ∑ m(k).
 
 
-Solution comment: Slow implementation, about 150ms. The idea was to build a tree
+Solution comment: Fast, ~2 ms The idea was to build a tree
 of possible exponentiation paths, thereby finding all the ways to reach
 a given k, and keeping the shortest. Large optimization was to only expand nodes
 where the path length was at least as short as one seen before. Not entirely obvious
 that this will include all the best paths, as the available ancestors could be
 different. But it works. The search depth limit was set high enough so that
-all k's could be reached.
+all k's could be reached. Another large speed boost was to not keep track of children
+in the nodes (original implementation did this). Yet another speed boost was to use a
+simple array to store the best path lengths, instead of using a map.
 */
 
 #include <iostream>
-#include <vector>
-#include <map>
-
-#include "prettyprint.hpp"
 #include "timing.hpp"
-
-int node_count = 0;
-std::map<int, int> best;
 
 struct Node {
     const int power;
-    std::vector<Node> children;
-    Node *parent;
-
-    Node(int k, Node *p, int depth, int limit) : power(k), parent(p) {
-        node_count++;
-        if (depth > 0 and best[power] <= depth) {
-            best[power] = depth;
-            // Add direct child (square).
-            if (2 * power <= limit)
-                children.emplace_back(2 * power, this, depth - 1, limit);
-
-            // Combine with any one ancestor, walking up the tree.
-            Node *ancestor = parent;
-            while (ancestor != nullptr) {
-                if (power + ancestor->power <= limit)
-                    children.emplace_back(power + ancestor->power, this, depth - 1, limit);
-                ancestor = ancestor->parent;
-            }
-        }
-    }
+    const Node *parent;
 };
+
+void expand_node(const Node &node, int depth, int limit);
+
+constexpr int depth_limit = 12;
+constexpr int power_limit = 200;
+int node_count = 0;
+int best[power_limit + 1] = {0};
 
 int main() {
     euler::Timer timer{};
 
-    constexpr int depth_limit = 12;
-    constexpr int power_limit = 200;
-
     // Expand the root node (n^1).
-    Node root(1, nullptr, depth_limit, power_limit);
+    expand_node({1, nullptr}, depth_limit, power_limit);
 
     // Results now stored in best.
-    int m_sum = 0;
-    for (const auto &[power, depth] : best) {
-        m_sum += depth_limit - depth;
+    int m_sum = depth_limit * power_limit;
+    for (int i = 0; i <= power_limit; ++i) {
+        m_sum -= best[i];
     }
 
     timer.stop();
     printf("Answer: %d\n", m_sum);
-    printf("Map size: %lu\n", best.size());
 }
 
+void expand_node(const Node &node, int depth, int limit) {
+    node_count++;
+    if (depth > 0 and best[node.power] <= depth) {
+        best[node.power] = depth;
+        // Add direct child (square).
+        if (2 * node.power <= limit)
+            expand_node({2 * node.power, &node}, depth - 1, limit);
+
+        // Combine with any one ancestor, walking up the tree.
+        auto ancestor = node.parent;
+        while (ancestor != nullptr) {
+            if (node.power + ancestor->power <= limit)
+                expand_node({node.power + ancestor->power, &node}, depth - 1, limit);
+            ancestor = ancestor->parent;
+        }
+    }
+}
