@@ -119,7 +119,7 @@ bool is_prime(Integer n, int k = 20) {
             continue;
 
         for (Integer inner_check = 0; inner_check < r - 1; ++inner_check) {
-            x = pow_mod(x, 2, n);
+            x = mul_mod(x, x, n);
             if (x == 1)
                 return false;
             if (x == n - 1)
