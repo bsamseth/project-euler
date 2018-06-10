@@ -20,4 +20,18 @@ constexpr bool is_palindrome(Int x) {
     return x == m;
 }
 
+/**
+ * Return the digit sum of a base-10 number.
+ */
+template<typename Int>
+constexpr bool digit_sum(Int x) {
+    static_assert(std::is_integral<Int>::value, "Integral required.");
+
+    Int s = 0;
+    do {
+        s += x % 10;
+    } while (x /= 10);
+
+    return s;
+}
 }
