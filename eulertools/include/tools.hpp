@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <type_traits>
+#include <limits>
 
 namespace euler {
 
@@ -33,17 +34,65 @@ inline auto square(T x) {
 }
 
 /**
+ * Return (a * b) % modulo, handling potential overflow in multiplication.
+ */
+template<typename IntA,
+        typename IntB,
+        typename Modulus>
+Modulus mul_mod(IntA A, IntB B, Modulus modulo) {
+
+    static_assert(std::is_integral<IntA>::value, "Integral required.");
+    static_assert(std::is_integral<IntB>::value, "Integral required.");
+    static_assert(std::is_integral<Modulus>::value, "Integral required.");
+
+    static constexpr auto modulus_max_value = std::numeric_limits<Modulus>::max();
+
+    // (a * b) % modulo = (a % modulo) * (b % modulo) % modulo
+    Modulus a = A % modulo;
+    Modulus b = B % modulo;
+
+    // fast path
+    if (b == 0 or a <= modulus_max_value / b)
+        return (a * b) % modulo;
+
+    // we might encounter overflows (slow path)
+    // the number of loops depends on b, therefore try to minimize b
+    if (b > a)
+        std::swap(a, b);
+
+    // bitwise multiplication
+    Modulus result = 0;
+    while (a > 0 && b > 0) {
+        // b is odd ? a*b = a + a*(b-1)
+        if (odd(b)) {
+            result += a;
+            if (result >= modulo)
+                result -= modulo;
+        }
+
+        // b is even ? a*b = (2*a)*(b/2)
+        a <<= 1;
+        if (a >= modulo)
+            a -= modulo;
+
+        // next bit
+        b >>= 1;
+    }
+
+    return result;
+}
+
+/**
  * Fast calculation of `a^x mod n` using right-to-left
  * binary modular exponentiation.
  *
- * Note that overflow is a potential issue, if (n -1)^2
- * overflows the integer type of n.
+ * Safe from overfow issues due to use of mul_mod.
  *
  * See http://en.wikipedia.org/wiki/Modular_exponentiation
  */
 template<typename Base,
-         typename Exponent,
-         typename Modulus>
+        typename Exponent,
+        typename Modulus>
 constexpr Modulus pow_mod(Base a, Exponent x, Modulus n) {
     static_assert(std::is_integral<Base>::value, "Integral required.");
     static_assert(std::is_integral<Exponent>::value, "Integral required.");
@@ -56,15 +105,17 @@ constexpr Modulus pow_mod(Base a, Exponent x, Modulus n) {
 
     while (x) {
 
-        if ( x & 1)
-            res = (a * res) % n;
+        if ( odd(x) )
+            res = mul_mod(a, res, n);
 
         x >>= 1;
 
-        a = (a * a) % n;
+        a = mul_mod(a, a, n);
     }
     return res;
 };
+
+
 
 template<typename Base, typename Exponent>
 Base pow(Base base, Exponent exp) {
