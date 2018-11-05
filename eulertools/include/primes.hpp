@@ -8,6 +8,7 @@
 #include <random>
 
 #include <tools.hpp>
+#include <itertools.hpp>
 
 namespace euler::primes {
 
@@ -75,6 +76,45 @@ void prime_map(Integer n, Maptype &map) {
 };
 
 /**
+ * Return an unordered_map with (p : a) pairs where a is
+ * the largest power of p which divides n.
+ */
+template<typename Integer = int,
+        typename Power = int>
+std::unordered_map<Integer, Power> prime_map(Integer n) {
+    std::unordered_map<Integer, Power> primes;
+    prime_map(n, primes);
+    return primes;
+}
+
+/**
+ * Return a vector with all factors of n, including duplicates.
+ */
+template<typename Integer = int>
+std::vector<Integer> prime_list(Integer n) {
+    std::vector<Integer> primes;
+    for (const auto& [prime, power] : prime_map(n)) {
+        for (int i = 0; i < power; ++i)
+            primes.push_back(prime);
+    }
+    return primes;
+}
+
+/**
+ * Return all divisors of n.
+ */
+template<typename Integer = int>
+std::set<Integer> divisors(Integer n) {
+    auto factors = prime_list(n);
+    auto divisors = itertools::powerset(factors.begin(), factors.end());
+    std::set<Integer> divs;
+    for (const auto& factors : divisors) {
+        divs.insert(std::accumulate(factors.begin(), factors.end(), 1, std::multiplies<Integer>()));
+    }
+    return divs;
+}
+
+/**
  * Return the number of divisors for n^(power).
  */
 template<typename Integer = int, typename Power = int>
@@ -83,8 +123,7 @@ Integer number_of_divisors(Integer n, Power power = 1) {
     static_assert(std::is_integral<Integer>::value, "Integral required.");
     static_assert(std::is_integral<Power>::value, "Integral required.");
 
-    std::unordered_map<Integer, Integer> primes;
-    prime_map(n, primes);
+    auto primes = prime_map(n);
     Integer count = 1;
     for (auto it = primes.begin(); it != primes.end(); ++it) {
         count *= power * it->second + 1;

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "primes.hpp"
+#include "prettyprint.hpp"
 
 using namespace euler::primes;
 
@@ -51,8 +52,7 @@ TEST(Primes, primes_up_to_tiny_N) {
 }
 
 TEST(Primes, prime_map) {
-    std::map<int, int> primes;
-    prime_map(2*2*2*3*3*11, primes);
+    auto primes = prime_map(2*2*2*3*3*11);
     ASSERT_EQ(3U, primes.size());
     ASSERT_TRUE(primes.count(2));
     ASSERT_EQ(3, primes[2]);
@@ -79,4 +79,10 @@ TEST(Primes, is_prime) {
 
     EXPECT_TRUE(is_prime(179426549UL));
     EXPECT_FALSE(is_prime(179426551UL));
+}
+
+TEST(Primes, divisors) {
+    auto divs = divisors(3*3*5*7);
+    std::set<int> expected = {1, 3, 5, 7, 9, 15, 21, 35, 45, 63, 105, 315};
+    EXPECT_EQ(expected, divs);
 }
