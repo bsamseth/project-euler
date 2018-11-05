@@ -5,6 +5,7 @@
 #include <cmath>
 #include <array>
 #include <unordered_map>
+#include <set>
 #include <random>
 
 #include <tools.hpp>
@@ -109,10 +110,11 @@ std::set<Integer> divisors(Integer n) {
     auto divisors = itertools::powerset(factors.begin(), factors.end());
     std::set<Integer> divs;
     for (const auto& factors : divisors) {
-        divs.insert(std::accumulate(factors.begin(), factors.end(), 1, std::multiplies<Integer>()));
+        divs.insert(std::accumulate(factors.begin(), factors.end(), (Integer) 1, std::multiplies<Integer>()));
     }
     return divs;
 }
+
 
 /**
  * Return the number of divisors for n^(power).
