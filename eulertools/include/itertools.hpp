@@ -2,6 +2,7 @@
 
 #include <bitset>
 #include <iterator>
+#include <algorithm>
 #include <cassert>
 
 
